@@ -3,16 +3,19 @@ import os
 
 load_dotenv()
 
+
 class Settings:
-    DB_HOST = os.getenv("DB_HOST", "localhost")
-    DB_PORT = os.getenv("DB_PORT", "5432")
-    DB_NAME = os.getenv("DB_NAME")
-    DB_USER = os.getenv("DB_USER")
-    DB_PASSWORD = os.getenv("DB_PASSWORD")
+    def __init__(self) -> None:
+       
+        self.MIN_SIZE = int(os.getenv("MIN_SIZE", "1"))
+        self.MAX_SIZE = int(os.getenv("MAX_SIZE", "20"))
+        self.TIMEOUT = int(os.getenv("TIMEOUT_DB", "10"))
 
-    DATABASE_URL = (
-        f"postgresql://{DB_USER}:{DB_PASSWORD}"
-        f"@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-    )
+        
 
-settings = Settings()
+        self.DATABASE_URL = os.getenv('DATABASE_URL')
+
+        if not self.DATABASE_URL:
+            raise RuntimeError(f"DatDATABASE_URL not set")
+
+settings_db = Settings()
